@@ -1,0 +1,46 @@
+﻿@model  MovieLensFrontEnd.Models.UserRatingsInformationModel 
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            UserID
+        </th>
+        <th>
+            Avarage Rating
+        </th>
+        <th>
+            Total ratings given
+        </th>
+    </tr>
+
+
+    @for (int i = 0; i < Model.UserAvarageRatingsAndTotalRatings.Count; i++)
+    {
+        <tr>
+            <td>
+                @Model.UserAvarageRatingsAndTotalRatings.ElementAt(i).UserID
+            </td>
+            <td>
+                @Model.UserAvarageRatingsAndTotalRatings.ElementAt(i).AvarageRating
+            </td>
+            <td>
+                @Model.UserAvarageRatingsAndTotalRatings.ElementAt(i).TotalRatings
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = @Model.UserAvarageRatingsAndTotalRatings.ElementAt(i).UserID })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))*@

@@ -1,0 +1,136 @@
+﻿@model MovieLensFrontEnd.Models.UserRatingsInformationModel
+
+@{
+    ViewBag.Title = "Details";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User @Model.Ratings.ElementAt(0).UserID history </title>
+    <LINK href="~/Content/timeline.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        //variables
+        var userMovieRatingsArray = [];
+        //var userMovieRatingsJSON = JSON.stringify(userMovieRatingsArray);
+        
+        @for (var i = 0; i < @Model.UserMoviesRatingsByUserID.Count; i++)
+        {
+            @: var temp = [];
+            @:temp.push(" @Model.UserMoviesRatingsByUserID[i].Title ");
+            @:temp.push(parseInt( @Model.UserMoviesRatingsByUserID[i].Rating ));
+            
+
+            @: userMovieRatingsArray.push(temp);
+        }
+
+
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', { 'packages': ['corechart'] });
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawHistogram);
+        google.charts.setOnLoadCallback(drawScatterChart);
+
+
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+
+        function drawHistogram() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Movie title');
+        data.addColumn('number', 'Rating');
+        data.addRows(userMovieRatingsArray);
+
+
+        var options = {
+          title: 'Movie titles and ratings given by the user',
+          legend: { position: 'none' },
+        };
+
+            var chart = new google.visualization.Histogram(document.getElementById('histogramchart_div'));
+        chart.draw(data, options);
+        }
+
+        function drawScatterChart() {
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', 'Movie title');
+        data.addColumn('number', 'Rating');
+        data.addRows(userMovieRatingsArray);
+
+        var options = {
+            title: 'Titles and ratings',
+          hAxis: {title: 'MovieTitle'},
+          vAxis: {title: 'Rating', minValue: 0, maxValue: 50},
+          legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('scatterchart_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+<body>
+    <h2>Details</h2>
+
+    <div>
+        <h4>Rating</h4>
+        <hr />
+
+
+        <div style="overflow-y: scroll; height:400px;">
+            <div id="histogramchart_div"></div>
+            <div id="scatterchart_div"></div>
+        </div>
+
+        <div style="overflow-y: scroll; height:400px;">
+
+            <div class="timeline">
+                @for (int i = 0; i < Model.UserMoviesRatingsByUserID.Count; i++)
+                {
+                    if (i % 2 != 0)
+                    {
+                        <div class="container1 left1">
+                            <div class="content1">
+                                <h2>@Model.UserMoviesRatingsByUserID[i].TimeStamp</h2>
+                                <h3>Title: @Model.UserMoviesRatingsByUserID[i].Title</h3>
+                                <p>Rating: @Model.UserMoviesRatingsByUserID[i].Rating</p>
+                                <p>Genre: @Model.UserMoviesRatingsByUserID[i].Genres</p>
+                            </div>
+                        </div>
+                    }
+                    if (i % 2 == 0)
+                    {
+                        <div class="container1 right1">
+                            <div class="content1">
+                                <h2>@Model.UserMoviesRatingsByUserID[i].TimeStamp</h2>
+                                <h3>Title: @Model.UserMoviesRatingsByUserID[i].Title</h3>
+                                <p>Rating: @Model.UserMoviesRatingsByUserID[i].Rating</p>
+                                <p>Genre: @Model.UserMoviesRatingsByUserID[i].Genres</p>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div>
+            <div style="overflow-y: scroll; height:400px;">
+                <h4>New Recommended top movies (based on his the user's given ratings)</h4>
+                @for (int i = 0; i < Model.TopRecommendedMovies.Count; i++)
+                {
+                    <div class="content1">
+                        <p>   @(i + 1) : @Model.TopRecommendedMovies[i] </p>
+                    </div>
+                }
+            </div>
+        </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</body>
+</html>

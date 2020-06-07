@@ -1,0 +1,43 @@
+De opdracht bevat moderne databasetechnieken, datamining technieken, onderzoek en moderne softwaretechnieken.
+
+Hierbij is geprobeerd tot een logisch geheel te komen.
+
+ 
+
+De opdracht zal met een aantal sprints uitgevoerd worden, waarbij tweewekelijks overleg over de voortgang zal plaatsvinden.
+
+ 
+
+Uitgangspunt is de Movielens 20M dataset (https://grouplens.org/datasets/movielens/)
+
+Deze set moet na opgeschoond te zijn geïmporteerd worden in een relationele database.
+
+Hiervoor zal een genormaliseerd databasemodel ontworpen moeten worden.
+
+ 
+
+Uit de database zullen een aantal overzichten moeten komen die op verschillende technieken gebaseerd zijn:
+
+ 
+
+Basis tabel overzichten (zoeken, filteren, sorteren)
+Statistische overzichten (mogelijkheden die SQL biedt)
+Trends
+Clustering (Nearest Neighbour zal efficiënt geïmplementeerd moeten worden)
+Visualisaties
+ 
+
+Bij de communicatie met de database moet LINQ gebruikt worden.
+
+ 
+
+Er zal onderzoek gedaan moeten worden naar:
+
+ 
+
+Visualisaties in C#
+Nearest neighbour algorithme
+Evt. technieken ter verbetering van de performance
+ 
+
+Aan het eind van het project moet de oplossing getoond worden waarbij de verschillende deelaspecten toegelicht worden.

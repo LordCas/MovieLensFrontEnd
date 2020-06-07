@@ -1,0 +1,58 @@
+﻿@model PagedList.IPagedList<MovieLensFrontEnd.Models.Movy>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Movies</h2>
+
+<form asp-controller="Movies" asp-action="Index" method="get">
+    <p>
+        Title: <input type="text" name="SearchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            MovieId
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Genre
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MovieId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genres)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.MovieId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+<!-- , sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter -->

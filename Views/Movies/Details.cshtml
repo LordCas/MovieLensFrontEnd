@@ -1,0 +1,190 @@
+﻿@model MovieLensFrontEnd.Models.MovieInformationModel
+
+@{
+    ViewBag.Title = "Details";
+}
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/Content/StarRatings.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+<h2>Details</h2>
+
+<div>
+    <h4>
+        @foreach (var movie in Model.Movies)
+        {
+            @movie.Title
+        }
+    </h4>
+    <hr />
+    <div class="container-fluid no-padding">
+            <div class="row">
+                <div class="col-md-5">
+                    <P> @Model.IMDBInformation.Plot </P>
+                </div>
+                <div class="col-7">
+                    <img src="@Model.IMDBInformation.Poster" alt="Movie_Poster" class="img-thumbnail" />
+                </div>
+            </div>
+    </div>
+        <dl class="dl-horizontal">
+
+
+            @foreach (var link in Model.Links)
+            {
+                <dt>
+                    IMDB Link
+                </dt>
+
+                <dd>
+                    <a href=@(String.Format("http://www.imdb.com/title/tt{0}",@link.ImdbId)) target="_blank">IMDB link</a>
+                </dd>
+
+                <dt>
+                    Movielens Link
+                </dt>
+
+                <dd>
+                    <a href="https://movielens.org/movies/@link.MovieId" target="_blank">MovieLens link</a>
+                </dd>
+
+                <dt>
+                    TheMovieDB link
+                </dt>
+
+                <dd>
+                    <a href="https://www.themoviedb.org/movie/@link.TmdbID" target="_blank">The Movie DB link</a>
+                </dd>
+            }
+            <dt>
+                Movie Rating
+            </dt>
+
+
+            <dd>
+                <span class="heading">User Rating</span>
+                @if (@Model.AvarageRatings < 14 || @Model.AvarageRatings > 11)
+                {
+                    <span class="fa fa-star checked"></span>
+                }
+                else
+                {
+                    <span class="fa fa-star unchecked"></span>
+                }
+                @if (@Model.AvarageRatings >= 11 || @Model.AvarageRatings < 21)
+                {
+                    <span class="fa fa-star checked"></span>
+                }
+                else
+                {
+                    <span class="fa fa-star unchecked"></span>
+                }
+                @if (@Model.AvarageRatings >= 21 || @Model.AvarageRatings < 31)
+                {
+                    <span class="fa fa-star checked"></span>
+                }
+                else
+                {
+                    <span class="fa fa-star unchecked"></span>
+                }
+                @if (@Model.AvarageRatings >= 31 || @Model.AvarageRatings < 41)
+                {
+                    <span class="fa fa-star checked"></span>
+                }
+                else
+                {
+                    <span class="fa fa-star unchecked"></span>
+                }
+                @if (@Model.AvarageRatings >= 45)
+                {
+                    <span class="fa fa-star checked"></span>
+                }
+                else
+                {
+                    <span class="fa fa-star unchecked"></span>
+                }
+
+
+                <p>@Model.AvarageRatings average based on @Model.TotalUsersWhomRated unique user Reviews.</p>
+                <hr style="border:3px solid #f1f1f1">
+
+                <div class="row">
+                    <div class="side">
+                        <div>5 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-5" style="@(String.Format("width : {0}%",@Model.FiveStarRatedPercentage))"></div>
+                        </div>
+                    </div>
+                    <div class="side right">
+                        <div>@Model.FiveStarRatings</div>
+                    </div>
+                    <div class="side">
+                        <div>4 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-4" style="@(String.Format("width : {0}%",@Model.FourStarRatedPercentage))"></div>
+                        </div>
+                    </div>
+                    <div class="side right">
+                        <div>@Model.FourStarRatings</div>
+                    </div>
+                    <div class="side">
+                        <div>3 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-3" style="@(String.Format("width : {0}%",@Model.ThreeStarRatedPercentage))"></div>
+                        </div>
+                    </div>
+                    <div class="side right">
+                        <div>@Model.ThreeStarRatings</div>
+                    </div>
+                    <div class="side">
+                        <div>2 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-2" style="@(String.Format("width : {0}%",@Model.TwoStarRatedPercentage))"></div>
+                        </div>
+                    </div>
+                    <div class="side right">
+                        <div>@Model.TwoStarRatings</div>
+                    </div>
+                    <div class="side">
+                        <div>1 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-1" style="@(String.Format("width : {0}%",@Model.OneStarRatedPercentage))"></div>
+                        </div>
+                    </div>
+                    <div class="side right">
+                        <div>@Model.OneStarRatings</div>
+                    </div>
+                </div>
+            </dd>
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Genres)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Genres)
+                </dd>*@
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
